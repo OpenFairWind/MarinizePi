@@ -1,0 +1,60 @@
+#! /bin/bash
+
+apt update
+apt upgrade -y
+apt install vim -y
+locale-gen en_US.UTF-8
+update-locale en_US.UTF-8
+curl -fsSL https://deb.nodesource.com/setup_21.x | bash
+apt-get install -y nodejs
+npm install -g npm@latest
+node -v && npm -v
+apt install libnss-mdns avahi-utils libavahi-compat-libdnssd-dev -y
+npm install -g signalk-server
+curl -sL https://install.raspap.com | bash
+
+cat >.bash_aliases << EOF
+# some more ls aliases
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+EOF
+
+cat >/etc/dhcpcd.conf << EOF
+# RaspAP default configuration
+hostname
+clientid
+persistent
+option rapid_commit
+option domain_name_servers, domain_name, domain_search, host_name
+option classless_static_routes
+option ntp_servers
+require dhcp_server_identifier
+slaac private
+nohook lookup-hostname
+
+# RaspAP wlan0 configuration
+interface wlan0
+static ip_address=172.24.1.1/24
+static routers=172.24.1.1
+nogateway
+EOF
+
+cat >> /etc/hostapd/hostapd.conf << EOF
+driver=nl80211
+ctrl_interface=/var/run/hostapd
+ctrl_interface_group=0
+auth_algs=1
+wpa_key_mgmt=WPA-PSK
+beacon_int=100
+ssid=Dynamo
+channel=6
+hw_mode=g
+ieee80211n=0
+wpa_passphrase=Dynamo2024!
+interface=wlan0
+wpa=2
+wpa_pairwise=CCMP
+country_code=IT
+ignore_broadcast_ssid=0
+EOF
