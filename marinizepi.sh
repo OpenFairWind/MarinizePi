@@ -1,25 +1,37 @@
 #! /bin/bash
 
+# Upgrade the system
 apt update
 apt upgrade -y
+
+# Install VI Improved
 apt install vim -y
+
+# Generate the locale
 locale-gen en_US.UTF-8
 update-locale en_US.UTF-8
-curl -fsSL https://deb.nodesource.com/setup_21.x | bash
-apt-get install -y nodejs
-npm install -g npm@latest
-node -v && npm -v
-apt install libnss-mdns avahi-utils libavahi-compat-libdnssd-dev -y
-npm install -g signalk-server
-curl -sL https://install.raspap.com | bash
 
+# Configure the Bash Aliases
 cat >.bash_aliases << EOF
-# some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 EOF
 
+# Install nodejs and npm
+curl -fsSL https://deb.nodesource.com/setup_21.x | bash
+apt-get install -y nodejs
+npm install -g npm@latest
+node -v && npm -v
+
+# Install Signal K server
+apt install libnss-mdns avahi-utils libavahi-compat-libdnssd-dev -y
+npm install -g signalk-server
+
+# Install RaspAP
+curl -sL https://install.raspap.com | bash
+
+# Configure the DHCP
 cat >/etc/dhcpcd.conf << EOF
 # RaspAP default configuration
 hostname
@@ -40,6 +52,7 @@ static routers=172.24.1.1
 nogateway
 EOF
 
+# Configure the Host Acces Point
 cat >> /etc/hostapd/hostapd.conf << EOF
 driver=nl80211
 ctrl_interface=/var/run/hostapd
