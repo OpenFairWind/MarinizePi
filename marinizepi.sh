@@ -64,14 +64,14 @@ nogateway
 EOF
 
 # Configure dnsmasq
-cat >> /etc/dnsmasq.d/090_wlan0.conf << EOF
+cat >/etc/dnsmasq.d/090_wlan0.conf << EOF
 # RaspAP wlan0 configuration
 interface=wlan0
 dhcp-range=172.24.1.32,172.24.1.96,255.255.255.0,7d
 EOF
 
 # Configure the Host Access Point
-cat >> /etc/hostapd/hostapd.conf << EOF
+cat >/etc/hostapd/hostapd.conf << EOF
 driver=nl80211
 ctrl_interface=/var/run/hostapd
 ctrl_interface_group=0
@@ -96,3 +96,7 @@ systemctl set-default graphical.target
 ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
 #rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
 #sed /etc/lightdm/lightdm.conf -i -e "s/^autologin-user=.*/#autologin-user=/"
+
+# Install and enable vnc server
+apt install realvnc-vnc-server -y
+systemctl enable vncserver-x11-serviced
