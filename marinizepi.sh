@@ -17,6 +17,8 @@ alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
 EOF
+cp .bash_aliases /home/pi/.bash_aliases
+chown pi:pi /home/pi/.bash_aliases
 
 # Install nodejs and npm
 curl -fsSL https://deb.nodesource.com/setup_21.x | bash
@@ -76,5 +78,5 @@ EOF
 apt install xserver-xorg raspberrypi-ui-mods -y
 systemctl set-default graphical.target
 ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
+#rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
 #sed /etc/lightdm/lightdm.conf -i -e "s/^autologin-user=.*/#autologin-user=/"
