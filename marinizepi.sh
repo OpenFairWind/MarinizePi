@@ -30,6 +30,9 @@ node -v && npm -v
 apt install libnss-mdns avahi-utils libavahi-compat-libdnssd-dev -y
 npm install -g signalk-server
 
+# Start interactive Signal K server setup
+signalk-server-setup
+
 # Install RaspAP
 curl -sL https://install.raspap.com | bash
 
