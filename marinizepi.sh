@@ -57,6 +57,13 @@ static routers=172.24.1.1
 nogateway
 EOF
 
+# Configure dnsmasq
+cat >> /etc/dnsmasq.d/090_wlan0.conf << EOF
+# RaspAP wlan0 configuration
+interface=wlan0
+dhcp-range=172.24.1.32,172.24.1.96,255.255.255.0,7d
+EOF
+
 # Configure the Host Acces Point
 cat >> /etc/hostapd/hostapd.conf << EOF
 driver=nl80211
