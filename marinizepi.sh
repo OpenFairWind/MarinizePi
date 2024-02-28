@@ -33,6 +33,9 @@ npm install -g signalk-server
 # Start interactive Signal K server setup
 signalk-server-setup
 
+# Get the Vessel name
+VESSEL_NAME=`jq -r .[0].updates[0].values[0].value.name /home/pi/.signalk/baseDeltas.json`
+
 # Install RaspAP
 curl -sL https://install.raspap.com | bash
 
@@ -67,7 +70,7 @@ interface=wlan0
 dhcp-range=172.24.1.32,172.24.1.96,255.255.255.0,7d
 EOF
 
-# Configure the Host Acces Point
+# Configure the Host Access Point
 cat >> /etc/hostapd/hostapd.conf << EOF
 driver=nl80211
 ctrl_interface=/var/run/hostapd
@@ -75,11 +78,11 @@ ctrl_interface_group=0
 auth_algs=1
 wpa_key_mgmt=WPA-PSK
 beacon_int=100
-ssid=Dynamo
+ssid=$VESSEL_NAME
 channel=6
 hw_mode=g
 ieee80211n=0
-wpa_passphrase=Dynamo2024!
+wpa_passphrase=ChangeMe
 interface=wlan0
 wpa=2
 wpa_pairwise=CCMP
