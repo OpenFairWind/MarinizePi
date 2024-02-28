@@ -100,3 +100,6 @@ ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants
 # Install and enable vnc server
 apt install realvnc-vnc-server -y
 systemctl enable vncserver-x11-serviced
+
+# Install Chromium
+apt install chromium-browser -y
