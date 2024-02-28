@@ -33,6 +33,9 @@ npm install -g signalk-server
 # Install RaspAP
 curl -sL https://install.raspap.com | bash
 
+# Chanche the RaspAP port
+sed /etc/lighttpd/lighttpd.conf -i -e "s/^server.port                 = 80/server.port                 = 8080/"
+
 # Configure the DHCP
 cat >/etc/dhcpcd.conf << EOF
 # RaspAP default configuration
