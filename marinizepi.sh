@@ -110,3 +110,6 @@ systemctl enable vncserver-x11-serviced
 
 # Install Chromium
 apt install chromium-browser -y
+
+# Install the SD Card Clone utility
+apt install piclone -y
