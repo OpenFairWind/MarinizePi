@@ -44,7 +44,7 @@ signalk-server-setup
 VESSEL_NAME=`jq -r .[0].updates[0].values[0].value.name /home/pi/.signalk/baseDeltas.json`
 
 # Install RaspAP
-curl -sL https://install.raspap.com | bash
+curl -sL https://install.raspap.com | bash -s -- -y -o 0 -a 1 -w 0 -e 0
 
 # Chanche the RaspAP port
 sed /etc/lighttpd/lighttpd.conf -i -e "s/^server.port                 = 80/server.port                 = 8080/"
