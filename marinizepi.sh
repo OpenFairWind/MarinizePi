@@ -98,11 +98,9 @@ ignore_broadcast_ssid=0
 EOF
 
 # Setup user interface
-apt install xserver-xorg raspberrypi-ui-mods -y
+apt install xserver-xorg raspberrypi-ui-mods xcompmgr -y
 systemctl set-default graphical.target
 ln -fs /lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty1.service
-#rm /etc/systemd/system/getty@tty1.service.d/autologin.conf
-#sed /etc/lightdm/lightdm.conf -i -e "s/^autologin-user=.*/#autologin-user=/"
 
 # Install and enable vnc server
 apt install realvnc-vnc-server -y
