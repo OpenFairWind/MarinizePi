@@ -5,9 +5,9 @@ A simple script to marinize the Raspberry Pi OS.
 
   Raspberry Pi 3: 32-bit light Raspberry Pi OS
   
-  Raspberry Pi 4 4Gb: 32-bit standard Pi OS
+  Raspberry Pi 4 4Gb: 32-bit light Pi OS
   
-  Raspberry Pi 4 8Gb: 64-bit standard Pi OS
+  Raspberry Pi 4 8Gb: 64-bit light Pi OS
 
 
   You can configure your OS to connect to your WiFi router with an Internet connection.
