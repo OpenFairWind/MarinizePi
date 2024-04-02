@@ -1,13 +1,17 @@
 # MarinizePi
 A simple script to marinize the Raspberry Pi OS.
 
-* Prepare an SD card with Raspberry Pi Imager.
+* Prepare an SD card with Raspberry Pi Imager:
 
-  Raspberry Pi 3: 32-bit light Raspberry Pi OS
+  Raspberry Pi 0w 512MB: Not tested
   
-  Raspberry Pi 4 4Gb: 32-bit light Pi OS
+  Raspberry Pi 3 1GB: 32-bit Lite Raspberry Pi OS
   
-  Raspberry Pi 4 8Gb: 64-bit light Pi OS
+  Raspberry Pi 4 4GB: 32-bit Lite Raspberry Pi OS
+  
+  Raspberry Pi 4 8GB: 64-bit Lite Raspberry Pi OS
+
+  Raspberry Pi 5: Not tested
 
 
   You can configure your OS to connect to your WiFi router with an Internet connection.
