@@ -34,16 +34,16 @@ A simple script to marinize the Raspberry Pi OS.
   ```
     ssh pi@192.168.1.x
   ```
-  Type your password, then hit the return key
+  Type your password, then hit the return key.
 
 * Marinize your Pi
   Act as super user
+  
   ```
   sudo -i
-  apt install screen -y
-  screen
   ```
-  Perform the marinization (it takes long time)
+  
+  Perform the marinization (it takes a long time)
   ```
   curl https://raw.githubusercontent.com/OpenFairWind/MarinizePi/main/marinizepi.sh|bash
   ```
