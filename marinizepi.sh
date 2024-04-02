@@ -37,11 +37,112 @@ node -v && npm -v
 apt install libnss-mdns avahi-utils libavahi-compat-libdnssd-dev -y
 npm install -g signalk-server
 
-# Start interactive Signal K server setup
-signalk-server-setup
+# Start Signal K server setup
+mkdir /home/pi/.signalk
+mkdir /home/pi/.signalk/plugin-config-data
+mkdir /home/pi/.signalk/plugin-config-data/resources-provider
+mkdir /home/pi/.signalk/plugin-config-data/resources-provider/resources
+mkdir /home/pi/.signalk/plugin-config-data/resources-provider/resources/notes
+mkdir /home/pi/.signalk/plugin-config-data/resources-provider/resources/regions
+mkdir /home/pi/.signalk/plugin-config-data/resources-provider/resources/routes
+mkdir /home/pi/.signalk/plugin-config-data/resources-provider/resources/waypoints
+mkdir /home/pi/.signalk/serverState
+mkdir /home/pi/.signalk/serverState/course
 
-# Get the Vessel name
-VESSEL_NAME=`jq -r .[0].updates[0].values[0].value.name /home/pi/.signalk/baseDeltas.json`
+cat > /home/pi/.signalk/baseDeltas.json << EOF
+[
+  {
+    "context": "vessels.self",
+    "updates": [
+      {
+        "values": [
+          {
+            "path": "",
+            "value": {
+              "mmsi": "$VESSEL_MMSI",
+              "name": "$VESSEL_NAME"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
+EOF
+
+cat > /home/pi/.signalk/package.json << EOF
+{
+  "name": "signalk-server-config",
+  "version": "0.0.1",
+  "description": "This file is here to track your plugin and webapp installs.",
+  "repository": {},
+  "license": "Apache-2.0"
+}
+EOF
+
+cat > /home/pi/.signalk/plugin-config-data/resources-provider.json << EOF
+{
+  "configuration": {
+    "standard": {
+      "routes": true,
+      "waypoints": true,
+      "notes": true,
+      "regions": true
+    },
+    "custom": [],
+    "path": "./resources"
+  }
+}
+EOF
+
+cat >/home/pi/.signalk/settings.json << EOF
+{
+  "interfaces": {},
+  "ssl": false,
+  "pipedProviders": [],
+  "security": {
+    "strategy": "./tokensecurity"
+  }
+}
+EOF
+
+cat >/home/pi/.signalk/signalk-server << EOF
+#!/bin/sh
+/usr/lib/node_modules/signalk-server/bin/signalk-server -c /home/pi/.signalk/
+EOF
+
+chown -R pi:pi /home/pi/.signalk
+chmod +x /home/pi/.signalk/signalk-server
+
+cat > cat /etc/systemd/system/signalk.service << EOF
+ExecStart=/home/pi/.signalk/signalk-server
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+WorkingDirectory=/home/pi/.signalk/
+User=root
+Environment=EXTERNALPORT=3000
+Environment=NODE_ENV=production
+Environment=RUN_FROM_SYSTEMD=true
+[Install]
+WantedBy=multi-user.target
+EOF
+
+cat > /etc/systemd/system/signalk.socket << EOF
+[Socket]
+ListenStream=3000
+
+
+[Install]
+WantedBy=sockets.target
+EOF
+
+systemctl daemon-reload
+systemctl enable signalk.service
+systemctl enable signalk.socket
+systemctl stop signalk.service
+systemctl restart signalk.socket
+systemctl restart signalk.service
 
 # Install RaspAP
 curl -sL https://install.raspap.com | bash -s -- -y -o 0 -a 1 -w 0 -e 0
