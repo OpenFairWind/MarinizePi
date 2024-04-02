@@ -36,6 +36,8 @@ A simple script to marinize the Raspberry Pi OS.
   Act as super user
   ```
   sudo -i
+  apt install screen -y
+  screen
   ```
   Perform the marinization (it takes long time)
   ```
