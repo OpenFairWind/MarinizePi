@@ -7,12 +7,14 @@ apt upgrade -y
 # Install VI Improved
 apt install vim uuid-runtime -y
 
-if [ -z "${VESSEL_NAME}" ];
-  echo "Please, export the variable VESSEL_NAME cointaining the name of the vessel"
+if [ -z "${VESSEL_NAME}" ]
+then
+  echo "Please export the variable VESSEL_NAME containing the vessel's name."
   exit 1
 fi
 
-if [ -z "${VESSEL_MMSI}" ];
+if [ -z "${VESSEL_MMSI}" ]
+then
   UUID=`uuidgen`
   VESSEL_UUID="urn:mrn:signalk:uuid:$UUID"
   echo "Using $VESSEL_NAME UUID: $VESSEL_UUID"
