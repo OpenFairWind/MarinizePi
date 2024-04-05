@@ -130,7 +130,7 @@ EOF
 chown -R pi:pi /home/pi/.signalk
 chmod +x /home/pi/.signalk/signalk-server
 
-cat > cat /etc/systemd/system/signalk.service << EOF
+cat > /etc/systemd/system/signalk.service << EOF
 ExecStart=/home/pi/.signalk/signalk-server
 Restart=always
 StandardOutput=syslog
