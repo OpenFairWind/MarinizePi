@@ -131,12 +131,13 @@ chown -R pi:pi /home/pi/.signalk
 chmod +x /home/pi/.signalk/signalk-server
 
 cat > /etc/systemd/system/signalk.service << EOF
+[Service]
 ExecStart=/home/pi/.signalk/signalk-server
 Restart=always
 StandardOutput=syslog
 StandardError=syslog
-WorkingDirectory=/home/pi/.signalk/
-User=root
+WorkingDirectory=/home/pi/.signalk
+User=pi
 Environment=EXTERNALPORT=3000
 Environment=NODE_ENV=production
 Environment=RUN_FROM_SYSTEMD=true
